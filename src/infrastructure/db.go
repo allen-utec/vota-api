@@ -23,3 +23,8 @@ func OpenMysqlConnection() (*gorm.DB, error) {
 	err = dbConn.AutoMigrate(&domain.User{}, &domain.Poll{}, &domain.PollOption{})
 	return dbConn, err
 }
+
+func InitRepositories(dbConn *gorm.DB) {
+	PollRepositoryInstance = &PollRepository{dbConn}
+	UserRepositoryInstance = &UserRepository{dbConn}
+}

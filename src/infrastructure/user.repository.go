@@ -11,12 +11,6 @@ type UserRepository struct {
 
 var UserRepositoryInstance *UserRepository
 
-func InitUserRepository(dbConn *gorm.DB) {
-	if UserRepositoryInstance == nil {
-		UserRepositoryInstance = &UserRepository{dbConn}
-	}
-}
-
 func (r *UserRepository) Create(user domain.User) (domain.User, error) {
 	result := r.dbConn.FirstOrCreate(&user)
 

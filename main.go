@@ -12,8 +12,7 @@ func main() {
 	}
 
 	/* Init Repositories */
-	infrastructure.InitUserRepository(dbConn)
-	infrastructure.InitPollRepository(dbConn)
+	infrastructure.InitRepositories(dbConn)
 
 	/* Init Api */
 	infrastructure.InitApiRoutes()
