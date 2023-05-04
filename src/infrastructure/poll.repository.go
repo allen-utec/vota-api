@@ -9,8 +9,6 @@ type PollRepository struct {
 	dbConn *gorm.DB
 }
 
-var PollRepositoryInstance *PollRepository
-
 func (r *PollRepository) Create(poll domain.Poll) (domain.Poll, error) {
 	result := r.dbConn.Create(&poll)
 

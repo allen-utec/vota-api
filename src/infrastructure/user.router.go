@@ -3,6 +3,7 @@ package infrastructure
 import (
 	"net/http"
 
+	"github.com/allen-utec/vota-api/src/application"
 	"github.com/allen-utec/vota-api/src/domain"
 	"github.com/gin-gonic/gin"
 )
@@ -13,16 +14,20 @@ type user struct {
 }
 
 func CreateUser(ctx *gin.Context) {
-	var newUser domain.User
+	var payload user
 
-	if err := ctx.BindJSON(&newUser); err != nil {
+	if err := ctx.BindJSON(&payload); err != nil {
 		ctx.JSON(http.StatusBadRequest, &responseError{
 			Message: err.Error(),
 		})
 		return
 	}
 
-	user, err := UserRepositoryInstance.Create(newUser)
+	newUser := domain.User{
+		Username: payload.Username,
+	}
+
+	user, err := application.UserService.CreateUseCase(newUser)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, &responseError{
 			Message: err.Error(),
@@ -34,7 +39,7 @@ func CreateUser(ctx *gin.Context) {
 }
 
 func GetAllUsers(ctx *gin.Context) {
-	users, err := UserRepositoryInstance.GetAll()
+	users, err := application.UserService.GetAllUseCase()
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, &responseError{
 			Message: err.Error(),

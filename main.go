@@ -5,15 +5,5 @@ import (
 )
 
 func main() {
-	/* Open Database Connection */
-	dbConn, err := infrastructure.OpenMysqlConnection()
-	if err != nil {
-		return
-	}
-
-	/* Init Repositories */
-	infrastructure.InitRepositories(dbConn)
-
-	/* Init Api */
-	infrastructure.InitApiRoutes()
+	infrastructure.Bootstrap()
 }

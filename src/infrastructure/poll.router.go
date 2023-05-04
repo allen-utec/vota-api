@@ -3,6 +3,7 @@ package infrastructure
 import (
 	"net/http"
 
+	"github.com/allen-utec/vota-api/src/application"
 	"github.com/allen-utec/vota-api/src/domain"
 	"github.com/gin-gonic/gin"
 )
@@ -11,7 +12,7 @@ type poll struct {
 	ID       string       `json:"id"`
 	Question string       `json:"question"`
 	Options  []pollOption `json:"options"`
-	User     user         `json:"user"`
+	UserID   uint         `json:"user_id"`
 }
 
 type pollOption struct {
@@ -20,16 +21,26 @@ type pollOption struct {
 }
 
 func CreatePoll(ctx *gin.Context) {
-	var newPoll domain.Poll
+	var payload poll
 
-	if err := ctx.BindJSON(&newPoll); err != nil {
+	if err := ctx.BindJSON(&payload); err != nil {
 		ctx.JSON(http.StatusBadRequest, &responseError{
 			Message: err.Error(),
 		})
 		return
 	}
 
-	poll, err := PollRepositoryInstance.Create(newPoll)
+	newPoll := domain.Poll{
+		Question:    payload.Question,
+		PollOptions: make([]domain.PollOption, len(payload.Options)),
+		UserID:      payload.UserID,
+	}
+
+	for i, e := range payload.Options {
+		newPoll.PollOptions[i] = domain.PollOption{Text: e.Text}
+	}
+
+	poll, err := application.PollService.CreateUseCase(newPoll)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, &responseError{
 			Message: err.Error(),
@@ -41,7 +52,7 @@ func CreatePoll(ctx *gin.Context) {
 }
 
 func GetAllPolls(ctx *gin.Context) {
-	polls, err := PollRepositoryInstance.GetAll()
+	polls, err := application.PollService.GetAllUseCase()
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, &responseError{
 			Message: err.Error(),

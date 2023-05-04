@@ -9,8 +9,6 @@ type UserRepository struct {
 	dbConn *gorm.DB
 }
 
-var UserRepositoryInstance *UserRepository
-
 func (r *UserRepository) Create(user domain.User) (domain.User, error) {
 	result := r.dbConn.FirstOrCreate(&user)
 

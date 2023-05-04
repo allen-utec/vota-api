@@ -29,3 +29,8 @@ type PollRepository interface {
 	Create(poll Poll) (Poll, error)
 	GetAll() ([]Poll, error)
 }
+
+type UserRepository interface {
+	Create(user User) (User, error)
+	GetAll() ([]User, error)
+}
