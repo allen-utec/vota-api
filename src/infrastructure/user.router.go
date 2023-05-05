@@ -8,12 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type user struct {
-	ID       string `json:"id"`
-	Username string `json:"username"`
-}
-
-func CreateUser(ctx *gin.Context) {
+func CreateUserHandler(ctx *gin.Context) {
 	var payload user
 
 	if err := ctx.BindJSON(&payload); err != nil {
@@ -38,7 +33,7 @@ func CreateUser(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, user)
 }
 
-func GetAllUsers(ctx *gin.Context) {
+func GetAllUsersHandler(ctx *gin.Context) {
 	users, err := application.UserService.GetAllUseCase()
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, &responseError{

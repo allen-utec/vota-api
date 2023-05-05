@@ -6,6 +6,12 @@ type pollService struct {
 	repository domain.PollRepository
 }
 
+var PollService pollService
+
+func (s *pollService) Init(r domain.PollRepository) {
+	s.repository = r
+}
+
 /* Use Cases */
 
 func (s *pollService) GetAllUseCase() ([]domain.Poll, error) {
@@ -15,5 +21,3 @@ func (s *pollService) GetAllUseCase() ([]domain.Poll, error) {
 func (s *pollService) CreateUseCase(poll domain.Poll) (domain.Poll, error) {
 	return s.repository.Create(poll)
 }
-
-var PollService pollService

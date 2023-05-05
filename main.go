@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	infrastructure.Bootstrap()
+	infrastructure.InitApi()
 }

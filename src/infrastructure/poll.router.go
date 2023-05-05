@@ -8,19 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type poll struct {
-	ID       string       `json:"id"`
-	Question string       `json:"question"`
-	Options  []pollOption `json:"options"`
-	UserID   uint         `json:"user_id"`
-}
-
-type pollOption struct {
-	ID   string `json:"id"`
-	Text string `json:"text"`
-}
-
-func CreatePoll(ctx *gin.Context) {
+func CreatePollHandler(ctx *gin.Context) {
 	var payload poll
 
 	if err := ctx.BindJSON(&payload); err != nil {
@@ -51,7 +39,7 @@ func CreatePoll(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, poll)
 }
 
-func GetAllPolls(ctx *gin.Context) {
+func GetAllPollsHandler(ctx *gin.Context) {
 	polls, err := application.PollService.GetAllUseCase()
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, &responseError{
