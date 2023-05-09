@@ -9,44 +9,44 @@ import (
 )
 
 func CreatePollHandler(ctx *gin.Context) {
-	var payload poll
+	var payload PollVM
 
 	if err := ctx.BindJSON(&payload); err != nil {
-		ctx.JSON(http.StatusBadRequest, &responseError{
-			Message: err.Error(),
-		})
+		reponseError(ctx, err)
 		return
 	}
 
 	newPoll := domain.Poll{
-		Question:    payload.Question,
-		PollOptions: make([]domain.PollOption, len(payload.Options)),
-		UserID:      payload.UserID,
+		Question:     payload.Question,
+		Alternatives: make([]domain.Alternative, len(payload.Alternatives)),
+		UserID:       payload.UserID,
+		Code:         generateID(),
 	}
 
-	for i, e := range payload.Options {
-		newPoll.PollOptions[i] = domain.PollOption{Text: e.Text}
+	for i, e := range payload.Alternatives {
+		newPoll.Alternatives[i] = domain.Alternative{Text: e.Text}
 	}
 
 	poll, err := application.PollService.CreateUseCase(newPoll)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, &responseError{
-			Message: err.Error(),
-		})
+		reponseError(ctx, err)
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, poll)
+	ctx.JSON(http.StatusCreated, formatPoll(poll))
 }
 
 func GetAllPollsHandler(ctx *gin.Context) {
 	polls, err := application.PollService.GetAllUseCase()
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, &responseError{
-			Message: err.Error(),
-		})
+		reponseError(ctx, err)
 		return
 	}
 
-	ctx.JSON(http.StatusOK, polls)
+	pollsVM := make([]PollVM, len(polls))
+	for i, e := range polls {
+		pollsVM[i] = formatPoll(e)
+	}
+
+	ctx.JSON(http.StatusOK, pollsVM)
 }

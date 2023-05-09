@@ -8,18 +8,19 @@ import (
 
 type User struct {
 	gorm.Model
-	Username string
+	Nickname string
 	Polls    []Poll
 }
 
 type Poll struct {
 	gorm.Model
-	Question    string
-	UserID      uint
-	PollOptions []PollOption
+	Question     string
+	UserID       uint
+	Alternatives []Alternative
+	Code         string
 }
 
-type PollOption struct {
+type Alternative struct {
 	gorm.Model
 	Text   string
 	PollID uint

@@ -9,38 +9,36 @@ import (
 )
 
 func CreateUserHandler(ctx *gin.Context) {
-	var payload user
+	var payload UserVM
 
 	if err := ctx.BindJSON(&payload); err != nil {
-		ctx.JSON(http.StatusBadRequest, &responseError{
-			Message: err.Error(),
-		})
+		reponseError(ctx, err)
 		return
 	}
 
 	newUser := domain.User{
-		Username: payload.Username,
+		Nickname: payload.Nickname,
 	}
 
 	user, err := application.UserService.CreateUseCase(newUser)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, &responseError{
-			Message: err.Error(),
-		})
+		reponseError(ctx, err)
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, user)
+	ctx.JSON(http.StatusCreated, formatUser(user))
 }
 
 func GetAllUsersHandler(ctx *gin.Context) {
 	users, err := application.UserService.GetAllUseCase()
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, &responseError{
-			Message: err.Error(),
-		})
+		reponseError(ctx, err)
 		return
 	}
 
-	ctx.JSON(http.StatusOK, users)
+	usersMV := make([]UserVM, len(users))
+	for i, e := range users {
+		usersMV[i] = formatUser(e)
+	}
+	ctx.JSON(http.StatusOK, usersMV)
 }

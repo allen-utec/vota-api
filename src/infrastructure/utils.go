@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	gonanoid "github.com/matoous/go-nanoid/v2"
 )
 
 type responseError struct {
@@ -24,4 +25,19 @@ func corsMiddleware() gin.HandlerFunc {
 
 		ctx.Next()
 	}
+}
+
+func reponseError(ctx *gin.Context, err error) {
+	ctx.JSON(http.StatusBadRequest, &responseError{
+		Message: err.Error(),
+	})
+}
+
+func generateID() string {
+	id, err := gonanoid.Generate("abcdefghijklmnopqrstuvwxyz0123456789", 10)
+	if err != nil {
+		panic(err)
+	}
+
+	return id
 }
