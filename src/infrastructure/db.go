@@ -2,7 +2,6 @@ package infrastructure
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/allen-utec/vota-api/src/domain"
 	"gorm.io/driver/mysql"
@@ -17,9 +16,9 @@ func init() {
 		return
 	}
 
-	dbUser := os.Getenv("DB_USER")
-	dbPass := os.Getenv("DB_PASS")
-	dbHost := os.Getenv("DB_HOST")
+	dbUser := getEnv("DB_USER", "")
+	dbPass := getEnv("DB_PASS", "")
+	dbHost := getEnv("DB_HOST", "")
 
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:3306)/vota?charset=utf8mb4&parseTime=True&loc=Local", dbUser, dbPass, dbHost)
 	dbConn, _ = gorm.Open(mysql.Open(dsn), &gorm.Config{

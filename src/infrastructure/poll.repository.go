@@ -18,3 +18,10 @@ func (r *PollRepository) GetAll() ([]domain.Poll, error) {
 
 	return polls, result.Error
 }
+
+func (r *PollRepository) GetByCode(code string) (domain.Poll, error) {
+	var poll domain.Poll
+	result := dbConn.Where(&domain.Poll{Code: code}).Preload("Alternatives").First(&poll)
+
+	return poll, result.Error
+}

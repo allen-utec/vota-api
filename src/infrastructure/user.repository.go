@@ -7,7 +7,7 @@ import (
 type UserRepository struct{}
 
 func (r *UserRepository) Create(user domain.User) (domain.User, error) {
-	result := dbConn.FirstOrCreate(&user)
+	result := dbConn.Create(&user)
 
 	return user, result.Error
 }

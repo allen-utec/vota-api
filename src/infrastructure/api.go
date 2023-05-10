@@ -1,6 +1,8 @@
 package infrastructure
 
 import (
+	"fmt"
+
 	"github.com/allen-utec/vota-api/src/application"
 	"github.com/gin-gonic/gin"
 )
@@ -15,10 +17,11 @@ func InitApi() {
 	router.Use(corsMiddleware())
 
 	router.GET("/polls", GetAllPollsHandler)
+	router.GET("/polls/:code", GetPollByCodeHandler)
 	router.POST("/polls", CreatePollHandler)
 
 	router.GET("/users", GetAllUsersHandler)
 	router.POST("/users", CreateUserHandler)
 
-	router.Run()
+	router.Run(fmt.Sprintf(":%s", getEnv("PORT", "8080")))
 }

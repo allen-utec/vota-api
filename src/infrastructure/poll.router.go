@@ -50,3 +50,13 @@ func GetAllPollsHandler(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, pollsVM)
 }
+
+func GetPollByCodeHandler(ctx *gin.Context) {
+	poll, err := application.PollService.GetByCodeUseCase(ctx.Param("code"))
+	if err != nil {
+		reponseError(ctx, err)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, formatPoll(poll))
+}

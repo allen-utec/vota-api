@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	gonanoid "github.com/matoous/go-nanoid/v2"
@@ -40,4 +41,12 @@ func generateID() string {
 	}
 
 	return id
+}
+
+func getEnv(key string, fallback string) string {
+	value := os.Getenv(key)
+	if len(value) == 0 {
+		return fallback
+	}
+	return value
 }

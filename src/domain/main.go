@@ -29,6 +29,7 @@ type Alternative struct {
 type PollRepository interface {
 	Create(poll Poll) (Poll, error)
 	GetAll() ([]Poll, error)
+	GetByCode(code string) (Poll, error)
 }
 
 type UserRepository interface {
