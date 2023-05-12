@@ -14,7 +14,7 @@ func (r *PollRepository) Create(poll domain.Poll) (domain.Poll, error) {
 
 func (r *PollRepository) GetAll() ([]domain.Poll, error) {
 	var polls []domain.Poll
-	result := dbConn.Find(&polls)
+	result := dbConn.Preload("Alternatives").Find(&polls)
 
 	return polls, result.Error
 }
