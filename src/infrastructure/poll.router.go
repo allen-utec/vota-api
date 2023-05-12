@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/allen-utec/vota-api/src/application"
 	"github.com/allen-utec/vota-api/src/domain"
@@ -59,4 +60,36 @@ func GetPollByCodeHandler(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, formatPoll(poll))
+}
+
+func CreateVoteHandler(ctx *gin.Context) {
+	var payload VoteVM
+
+	if err := ctx.BindJSON(&payload); err != nil {
+		reponseError(ctx, err)
+		return
+	}
+
+	pollId, err := strconv.ParseUint(ctx.Param("id"), 10, 32)
+	if err != nil {
+		reponseError(ctx, err)
+		return
+	}
+
+	newVote := domain.Vote{
+		PollID:        uint(pollId),
+		AlternativeID: payload.AlternativeID,
+		UserID:        payload.UserID,
+	}
+
+	_, err = application.VoteService.CreateUseCase(newVote)
+
+	if err != nil {
+		reponseError(ctx, err)
+		return
+	}
+
+	pollResults, err := application.PollService.GetResultsUseCase(uint(pollId))
+
+	ctx.JSON(http.StatusCreated, formatPollResults(pollResults))
 }

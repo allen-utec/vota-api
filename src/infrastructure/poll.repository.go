@@ -25,3 +25,9 @@ func (r *PollRepository) GetByCode(code string) (domain.Poll, error) {
 
 	return poll, result.Error
 }
+
+func (r *PollRepository) GetResults(id uint) (domain.Poll, error) {
+	var poll domain.Poll
+	result := dbConn.Preload("Alternatives").Preload("Votes").First(&poll, id)
+	return poll, result.Error
+}

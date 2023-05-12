@@ -18,6 +18,7 @@ type Poll struct {
 	UserID       uint
 	Alternatives []Alternative
 	Code         string
+	Votes        []Vote
 }
 
 type Alternative struct {
@@ -26,10 +27,22 @@ type Alternative struct {
 	PollID uint
 }
 
+type Vote struct {
+	gorm.Model
+	PollID        uint
+	AlternativeID uint
+	UserID        uint
+}
+
 type PollRepository interface {
 	Create(poll Poll) (Poll, error)
 	GetAll() ([]Poll, error)
 	GetByCode(code string) (Poll, error)
+	GetResults(id uint) (Poll, error)
+}
+
+type VoteRepository interface {
+	Create(vote Vote) (Vote, error)
 }
 
 type UserRepository interface {

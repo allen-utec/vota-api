@@ -27,7 +27,7 @@ func init() {
 		},
 	})
 
-	dbConn.AutoMigrate(&domain.User{}, &domain.Alternative{}, &domain.Poll{})
+	dbConn.AutoMigrate(&domain.User{}, &domain.Alternative{}, &domain.Poll{}, &domain.Vote{})
 
 	if dbConn != nil {
 		fmt.Printf("Database %s conected!\n", dbHost)

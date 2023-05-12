@@ -25,3 +25,7 @@ func (s *pollService) GetByCodeUseCase(code string) (domain.Poll, error) {
 func (s *pollService) CreateUseCase(poll domain.Poll) (domain.Poll, error) {
 	return s.repository.Create(poll)
 }
+
+func (s *pollService) GetResultsUseCase(id uint) (domain.Poll, error) {
+	return s.repository.GetResults(id)
+}

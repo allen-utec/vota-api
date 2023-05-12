@@ -10,6 +10,7 @@ import (
 func init() {
 	application.PollService.Init(&PollRepository{})
 	application.UserService.Init(&UserRepository{})
+	application.VoteService.Init(&VoteRepository{})
 }
 
 func InitApi() {
@@ -17,8 +18,9 @@ func InitApi() {
 	router.Use(corsMiddleware())
 
 	router.GET("/polls", GetAllPollsHandler)
-	router.GET("/polls/:code", GetPollByCodeHandler)
 	router.POST("/polls", CreatePollHandler)
+	router.GET("/polls/:code", GetPollByCodeHandler)
+	router.POST("/polls/:id", CreateVoteHandler)
 
 	router.GET("/users", GetAllUsersHandler)
 	router.POST("/users", CreateUserHandler)
