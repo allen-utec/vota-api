@@ -1,6 +1,6 @@
 package infrastructure
 
-import "github.com/allen-utec/vota-api/src/domain"
+import "github.com/allen-utec/vota-api-polls/src/domain"
 
 type PollVM struct {
 	ID           uint            `json:"id"`
@@ -13,11 +13,6 @@ type PollVM struct {
 type AlternativeVM struct {
 	ID   uint   `json:"id"`
 	Text string `json:"text"`
-}
-
-type UserVM struct {
-	ID       uint   `json:"id"`
-	Nickname string `json:"nickname"`
 }
 
 type VoteVM struct {
@@ -62,12 +57,4 @@ func formatPollResults(poll domain.Poll) PollResultsVM {
 		Votes:        votes,
 	}
 	return pollResultsVM
-}
-
-func formatUser(user domain.User) UserVM {
-	userVM := UserVM{
-		ID:       user.ID,
-		Nickname: user.Nickname,
-	}
-	return userVM
 }

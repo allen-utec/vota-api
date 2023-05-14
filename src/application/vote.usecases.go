@@ -1,6 +1,6 @@
 package application
 
-import "github.com/allen-utec/vota-api/src/domain"
+import "github.com/allen-utec/vota-api-polls/src/domain"
 
 type voteService struct {
 	repository domain.VoteRepository

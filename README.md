@@ -1,1 +1,1 @@
-# vota-api
+# vota-api-polls

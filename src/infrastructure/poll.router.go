@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/allen-utec/vota-api/src/application"
-	"github.com/allen-utec/vota-api/src/domain"
+	"github.com/allen-utec/vota-api-polls/src/application"
+	"github.com/allen-utec/vota-api-polls/src/domain"
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,4 +1,4 @@
-module github.com/allen-utec/vota-api
+module github.com/allen-utec/vota-api-polls
 
 go 1.20
 

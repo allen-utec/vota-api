@@ -3,7 +3,7 @@ package infrastructure
 import (
 	"fmt"
 
-	"github.com/allen-utec/vota-api/src/domain"
+	"github.com/allen-utec/vota-api-polls/src/domain"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
@@ -27,7 +27,7 @@ func init() {
 		},
 	})
 
-	dbConn.AutoMigrate(&domain.User{}, &domain.Alternative{}, &domain.Poll{}, &domain.Vote{})
+	dbConn.AutoMigrate(&domain.Alternative{}, &domain.Poll{}, &domain.Vote{})
 
 	if dbConn != nil {
 		fmt.Printf("Database %s conected!\n", dbHost)

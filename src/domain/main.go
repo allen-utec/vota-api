@@ -6,12 +6,6 @@ import (
 
 /* Entities */
 
-type User struct {
-	gorm.Model
-	Nickname string
-	Polls    []Poll
-}
-
 type Poll struct {
 	gorm.Model
 	Question     string
@@ -43,9 +37,4 @@ type PollRepository interface {
 
 type VoteRepository interface {
 	Create(vote Vote) (Vote, error)
-}
-
-type UserRepository interface {
-	Create(user User) (User, error)
-	GetAll() ([]User, error)
 }

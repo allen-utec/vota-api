@@ -1,7 +1,7 @@
 package infrastructure
 
 import (
-	"github.com/allen-utec/vota-api/src/domain"
+	"github.com/allen-utec/vota-api-polls/src/domain"
 )
 
 type VoteRepository struct{}

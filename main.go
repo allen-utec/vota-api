@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/allen-utec/vota-api/src/infrastructure"
+	"github.com/allen-utec/vota-api-polls/src/infrastructure"
 )
 
 func main() {
